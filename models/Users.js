@@ -25,6 +25,14 @@ module.exports = (sequelize, Datatypes)=>{
         CCCD:{
             type: Datatypes.STRING,
             allowNull:false
+        },
+        role:{
+            type: Datatypes.STRING,
+            allowNull:false
+        },
+        managementArea:{
+            type: Datatypes.STRING,
+            allowNull:false
         }
     }, {timestamps:false})
     return Users;

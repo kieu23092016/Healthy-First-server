@@ -1,5 +1,5 @@
 module.exports = (sequelize, Datatypes)=>{
-    const Deparments = sequelize.define("Deparments", {
+    const Departments = sequelize.define("Departments", {
         id: {
             allowNull: false,
             autoIncrement: true,
@@ -39,8 +39,15 @@ module.exports = (sequelize, Datatypes)=>{
             allowNull: false
         }
     }, {timestamps:false})
-    Deparments.associate = (models)=>{
-        Deparments.hasOne(models.Certification)
+    //departmentID
+    Departments.associate = (models)=>{
+        Departments.hasMany(models.Certification, {foreignKey: 'departmentsId'})
+        models.Certification.belongsTo(Departments,{foreignKey:'departmentsId'})
+        Departments.hasMany(models.DepartmentTesting, {foreignKey: 'departmentId'})
+        models.DepartmentTesting.belongsTo(Departments,{foreignKey:'departmentId'})
     }
-    return Deparments;
+    // Departments.associate = (models)=>{
+        
+    // }
+    return Departments;
 }

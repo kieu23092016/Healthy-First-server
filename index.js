@@ -6,6 +6,9 @@ const cors = require("cors");
 //parse json to express 
 app.use(express.json());
 app.use(cors());
+// const session = require("express-session");
+//app.use(session({secret: 'ssshhhhh'}));
+
 const db = require('./models')
 
 // Routers

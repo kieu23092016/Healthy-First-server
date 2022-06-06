@@ -1,23 +1,19 @@
 module.exports = (sequelize, Datatypes)=>{
-    const Certification = sequelize.define("Certification", {
+    const AssesingPrototype = sequelize.define("AssesingPrototype", {
         id: {
             allowNull: false,
             autoIncrement: true,
             primaryKey: true,
             type: Datatypes.INTEGER
         },
-        initialDate:{
-            type: Datatypes.DATE,
+        assessingResult:{
+            type: Datatypes.STRING,
             allowNull: false
         },
-        expiredDate:{
+        resultDate:{
             type: Datatypes.DATE,
             allowNull: false
-        },
-        disable: {
-            type: Datatypes.BOOLEAN,
-            allowNull: false,
         }
     }, {timestamps:false})
-    return Certification;
+    return AssesingPrototype;
 }
