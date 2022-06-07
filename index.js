@@ -21,6 +21,12 @@ app.use("/auth", usersRouter);
 const departmentRouter = require('./route/Departments')
 app.use("/departments", departmentRouter);
 
+const qualityInspectionRouter = require('./route/QualityInspection')
+app.use("/qualityInspection", qualityInspectionRouter);
+
+const staffManagementRouter = require('./route/Staff')
+app.use("/staffManagement", staffManagementRouter);
+
 db.sequelize.sync().then(()=>{
     app.listen(3002, ()=>{
         console.log("Server running on port 3001");

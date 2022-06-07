@@ -22,6 +22,20 @@ const validateToken = (req, res, next) =>{
     }
 }
 
+const checkAdmin = (req, res, next)=>{
+    const accessToken = req.body.header.accessToken;
+    // console.log(accessToken);
+    const validToken = verify(accessToken, "importantsecret");
+    console.log(validToken);
+    role = validToken.role;
+    console.log(validToken.role);
+    if(role === "admin") {
+        return next();
+    }
+    return res.json("Bạn không có quyền truy cập");
+}
+
+
 const getUserManagementArea = (req, res) =>{
     console.log("getProvince");
     const accessToken = req.body.header.accessToken;
@@ -33,4 +47,4 @@ const getUserManagementArea = (req, res) =>{
     return provinceManagement;
 }
 
-module.exports = {validateToken, getUserManagementArea};
+module.exports = {validateToken, getUserManagementArea, checkAdmin};

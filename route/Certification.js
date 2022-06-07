@@ -6,7 +6,6 @@ const router = express.Router();
 //get posts variable -- instance of Posts in models
 const {Certification} = require('../models');
 const {Departments} = require('../models');
-const {Users} = require('../models');
 
 
 // -----danh sách giấy chứng nhận
@@ -40,6 +39,14 @@ router.post("/recall/:id", validateToken,async(req, res)=>{
     cert.update({disable: 1});
     res.json(cert);
 })
+//---- Tìm giấy chứng nhận
+router.post("/find/:id", validateToken,async(req, res)=>{    
+    provinceManagement = getUserManagementArea(req, res);
+    console.log(provinceManagement);
+    const id = req.params.id;
+    const cert = await Certification.findOne({where:{id:id}, include:{model:Departments, required: true,  attributes:['id','name'], where:{province : provinceManagement}}});
+    res.json(cert);
+})
 
 //-----Gia hạn giấy chứng nhận
 router.post("/extend/:id",validateToken, async(req, res)=>{
@@ -52,7 +59,24 @@ router.post("/extend/:id",validateToken, async(req, res)=>{
     res.json(newCert);
 })
 
+//--------- thống kê
+router.post("/statistical",async (req, res)=>{
+    // provinceManagement = getUserManagementArea(req, res);
+    // console.log(provinceManagement);
+    const numOfFoodService = await Certification.findAll({
+        include:[{model: Departments, required: true, attributes:['id','name', 'bussinessType', sequelize.fn('count', sequelize.col('bussinessType'))], 
+                where:{bussinessType:"Ăn uống"}}],
+        group: ["Table.column1"]
+        });
 
+
+    res.json(numOfFoodService);
+})
+
+
+
+
+// không cần
 router.get("/expiredDate", async(req, res)=>{
     // const id = req.params.id;
     const today = new Date();
